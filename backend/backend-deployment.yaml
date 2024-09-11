@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: dev
+  namespace: backend-dev
   labels:
     role: backend
     env: demo
@@ -10,21 +10,19 @@ spec:
   replicas: 1
   strategy:
     type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 25%
   selector:
     matchLabels:
       role: backend
+      app: demo
   template:
     metadata:
       labels:
         role: backend
+        app: demo
     spec:
       containers:
       - name: backend
         image:  ahmedelsaeed/demo-backend-dev:70fb8a8
-        imagePullPolicy: Always
         env:
           - name: MONGO_CONN_STR
             value: mongodb://mongodb-svc:27017/todo?directConnection=true

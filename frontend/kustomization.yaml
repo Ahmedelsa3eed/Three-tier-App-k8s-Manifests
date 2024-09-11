@@ -2,6 +2,7 @@ resources:
 - namespace.yml
 - frontend-deployment.yaml
 - frontend-service.yaml
+- ingress.yaml
 
 
 commonAnnotations:

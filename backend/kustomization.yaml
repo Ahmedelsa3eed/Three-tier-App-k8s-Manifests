@@ -1,6 +1,8 @@
 resources:
 - backend-deployment.yaml
 - backend-service.yaml
+- namespace.yml
+- ingress.yaml
 
 
 commonAnnotations:
