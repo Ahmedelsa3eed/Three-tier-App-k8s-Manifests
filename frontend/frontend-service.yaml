@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
-  namespace: dev
+  namespace: frontend-dev
 spec:
   ports:
   - port: 3000
