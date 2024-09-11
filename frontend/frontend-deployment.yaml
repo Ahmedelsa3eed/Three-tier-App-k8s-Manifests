@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: dev
+  namespace: frontend-dev
   labels:
     role: frontend
     env: demo
@@ -10,23 +10,43 @@ spec:
   replicas: 1
   strategy:
     type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 25%
   selector:
     matchLabels:
       role: frontend
+      app: demo
   template:
     metadata:
       labels:
         role: frontend
+        app: demo
     spec:
       containers:
       - name: frontend
         image: ahmedelsaeed/demo-frontend-dev:70fb8a8
-        imagePullPolicy: Always
         env:
           - name: REACT_APP_BACKEND_URL
             value: "backend:8080" # assuming backend service is on port 8080
         ports:
         - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+
+
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
